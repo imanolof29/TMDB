@@ -8,7 +8,7 @@
 import Foundation
 
 struct GetMoviesEndpoint: Endpoint {
-    var path: String { "movies" }
+    var path: String { "search/movie" }
     var method: HTTPMethod { .get }
     var queryItems: [URLQueryItem]? { nil }
     var body: Data? { nil }

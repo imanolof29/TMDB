@@ -10,17 +10,19 @@ import Foundation
 struct RequestBuilder: Sendable {
     
     public func build(_ endpoint: any Endpoint) throws -> URLRequest {
-        guard var components = URLComponents(url: URL(string: "https://api.themoviedb.org/3/search/movie")!, resolvingAgainstBaseURL: true) else {
+        let baseURL = URL(string: "https://api.themoviedb.org/3")!
+        guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: true) else {
             throw NetworkError.invalidURL
         }
-        
+
         components.queryItems = endpoint.queryItems
         guard let url = components.url else { throw NetworkError.invalidURL }
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
+        request.httpBody = endpoint.body
+
         return request
     }
     
