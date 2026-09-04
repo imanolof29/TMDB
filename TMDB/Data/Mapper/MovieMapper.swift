@@ -10,7 +10,7 @@ import Foundation
 enum MovieMapper {
     
     nonisolated static func map(_ dto: MovieDTO) -> Movie? {
-        .init(title: dto.title)
+        .init(id: dto.id, title: dto.title, overview: dto.overview)
     }
     
     nonisolated static func map(_ dtos: [MovieDTO]) -> [Movie] {

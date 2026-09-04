@@ -16,22 +16,24 @@ struct HomeView: View {
     }
     
     var body: some View {
-        Group {
-            switch homeViewModel.loadState {
-            case .loading, .idle:
-                ProgressView()
+        NavigationStack {
+            Group {
+                switch homeViewModel.loadState {
+                case .loading, .idle:
+                    ProgressView()
 
-            case .loaded:
-                loadedContent
+                case .loaded:
+                    loadedContent
 
-            case .failed:
-                errorView(homeViewModel.loadState.userMessage)
+                case .failed:
+                    errorView(homeViewModel.loadState.userMessage)
+                }
             }
-        }
-        .navigationTitle("Películas")
-        .navigationBarTitleDisplayMode(.large)
-        .task {
-            await homeViewModel.load()
+            .navigationTitle("Películas")
+            .navigationBarTitleDisplayMode(.large)
+            .task {
+                await homeViewModel.load()
+            }
         }
     }
     

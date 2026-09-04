@@ -1,0 +1,9 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.DS_Store
+
+# TMDB secrets — el token real nunca va a git, solo el template
+TMDB/Core/Network/Secrets.swift

@@ -21,6 +21,8 @@ struct RequestBuilder: Sendable {
         request.httpMethod = endpoint.method.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("Bearer \(Secrets.tmdbAccessToken)", forHTTPHeaderField: "Authorization")
+        endpoint.headers.forEach { request.setValue($1, forHTTPHeaderField: $0) }
         request.httpBody = endpoint.body
 
         return request
