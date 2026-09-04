@@ -10,7 +10,7 @@ import Foundation
 struct RequestBuilder: Sendable {
     
     public func build(_ endpoint: any Endpoint) throws -> URLRequest {
-        guard var components = URLComponents(url: URL(string: "")!, resolvingAgainstBaseURL: true) else {
+        guard var components = URLComponents(url: URL(string: "https://api.themoviedb.org/3/search/movie")!, resolvingAgainstBaseURL: true) else {
             throw NetworkError.invalidURL
         }
         

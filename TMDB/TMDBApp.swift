@@ -11,7 +11,7 @@ import SwiftUI
 struct TMDBApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView(homeViewModel: HomeViewModel(movieRepository: MovieRepository(client: APIClient(session: URLSession(), requestBuilder: RequestBuilder()))))
         }
     }
 }

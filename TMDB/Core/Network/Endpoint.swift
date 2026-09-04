@@ -18,3 +18,8 @@ public protocol Endpoint: Sendable {
     var body: Data? { get }
     var headers: [String: String] { get }
 }
+
+public extension Endpoint {
+    var queryItems: [URLQueryItem]? { nil }
+    var bodyData: Data? { nil }
+}

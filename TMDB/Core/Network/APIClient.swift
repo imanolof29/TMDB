@@ -18,7 +18,7 @@ public enum NetworkError: Error, Sendable, Equatable {
 }
 
 protocol APIClientProtocol: Sendable {
-    func request<T: Decodable>(endpoint: any Endpoint) async throws -> T
+    func request<T: Decodable>(_ endpoint: any Endpoint) async throws -> T
 }
 
 public final class APIClient: APIClientProtocol, Sendable {
@@ -31,7 +31,7 @@ public final class APIClient: APIClientProtocol, Sendable {
         self.requestBuilder = requestBuilder
     }
     
-    func request<T>(endpoint: any Endpoint) async throws -> T where T : Decodable {
+    func request<T>(_ endpoint: any Endpoint) async throws -> T where T : Decodable {
         let urlRequest = try buildRequest(for: endpoint)
         let (data, response) = try await performRequest(urlRequest)
 
