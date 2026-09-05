@@ -7,21 +7,21 @@
 
 import SwiftUI
 
+@MainActor
 struct HomeView: View {
-    
+
+    @Environment(AppCoordinator.self) private var coordinator
+    @Environment(AppCompositionRoot.self) private var compositionRoot
+
     @State private var homeViewModel: HomeViewModel
-    
+
     init(homeViewModel: HomeViewModel) {
         _homeViewModel = State(initialValue: homeViewModel)
     }
-    
-    @State private var columns = [
-        GridItem(.flexible(minimum: 50, maximum: .infinity)),
-        GridItem(.flexible(minimum: 50, maximum: .infinity))
-    ]
-    
+
     var body: some View {
-        NavigationStack {
+        @Bindable var coordinator = coordinator
+        NavigationStack(path: $coordinator.homePath) {
             Group {
                 switch homeViewModel.loadState {
                 case .loading, .idle:
@@ -39,9 +39,17 @@ struct HomeView: View {
             .task {
                 await homeViewModel.load()
             }
+            .navigationDestination(for: TMDBRoute.self) { route in
+                switch route {
+                case .home:
+                    EmptyView()
+                case .movieDetail(let id):
+                    MovieDetailView(viewModel: MovieDetailViewModel(movieId: id, movieRepository: compositionRoot.movieRepository))
+                }
+            }
         }
     }
-    
+
     private var loadedContent: some View {
         VStack(spacing: 0) {
             if homeViewModel.isEmpty {
@@ -51,17 +59,19 @@ struct HomeView: View {
             }
         }
     }
-    
+
     private var moviesList: some View {
         List {
             ForEach(homeViewModel.allMovies) { movie in
-                MovieCardView(movie: movie)
+                NavigationLink(value: TMDBRoute.movieDetail(id: movie.id)) {
+                    MovieCardView(movie: movie)
+                }
             }
         }
         .listStyle(.plain)
         .refreshable { await homeViewModel.reload() }
     }
-    
+
     private func errorView(_ message: String) -> some View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
@@ -75,5 +85,5 @@ struct HomeView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(32)
     }
-    
+
 }

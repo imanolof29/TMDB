@@ -12,9 +12,9 @@ final class HomeViewModel {
     
     private(set) var loadState: LoadState<[Movie]> = .idle
     
-    private let movieRepository: MovieRepository
+    private let movieRepository: MovieRepositoryProtocol
     
-    init(movieRepository: MovieRepository) {
+    init(movieRepository: MovieRepositoryProtocol) {
         self.movieRepository = movieRepository
     }
     
