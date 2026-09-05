@@ -15,6 +15,11 @@ struct HomeView: View {
         _homeViewModel = State(initialValue: homeViewModel)
     }
     
+    @State private var columns = [
+        GridItem(.flexible(minimum: 50, maximum: .infinity)),
+        GridItem(.flexible(minimum: 50, maximum: .infinity))
+    ]
+    
     var body: some View {
         NavigationStack {
             Group {
@@ -49,11 +54,11 @@ struct HomeView: View {
     
     private var moviesList: some View {
         List {
-            ForEach(homeViewModel.allMovies, id: \.title) { movie in
-                Text(movie.title)
+            ForEach(homeViewModel.allMovies) { movie in
+                MovieCardView(movie: movie)
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.plain)
         .refreshable { await homeViewModel.reload() }
     }
     

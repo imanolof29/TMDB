@@ -37,4 +37,24 @@ final class MovieRepository: MovieRepositoryProtocol, Sendable {
         }
     }
     
+    func getPopularMovies() async throws -> [Movie] {
+        do {
+            let endpoint = GetPopularMoviesEndpoint()
+            let pageDTO: PaginationDTO<[MovieDTO]> = try await client.request(endpoint)
+            return MovieMapper.map(pageDTO.results)
+        } catch {
+            throw mapToTMDBError(error)
+        }
+    }
+    
+    func getNowPlaying() async throws -> [Movie] {
+        do {
+            let endpoint = GetNowPlayingEndpoint()
+            let pageDTO: PaginationDTO<[MovieDTO]> = try await client.request(endpoint)
+            return MovieMapper.map(pageDTO.results)
+        } catch {
+            throw mapToTMDBError(error)
+        }
+    }
+    
 }

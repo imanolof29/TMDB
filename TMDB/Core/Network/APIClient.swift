@@ -69,11 +69,19 @@ public final class APIClient: APIClientProtocol, Sendable {
 
     private func decode<T: Decodable>(_ data: Data) throws -> T {
         do {
-            return try JSONDecoder().decode(T.self, from: data)
+            return try JSONDecoder.tmdb.decode(T.self, from: data)
         } catch {
             let wrapped = NetworkError.decodingFailed(error.localizedDescription)
             throw wrapped
         }
     }
-    
+
+}
+
+extension JSONDecoder {
+    static let tmdb: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
 }
