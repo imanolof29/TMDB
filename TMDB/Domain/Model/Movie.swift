@@ -17,4 +17,5 @@ struct Movie: Identifiable, Equatable, Sendable {
     let voteAverage: Double
     let voteCount: Int
     let runtime: Int?
+    let genres: [Genre]
 }

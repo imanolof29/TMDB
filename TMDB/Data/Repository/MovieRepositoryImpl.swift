@@ -25,13 +25,10 @@ final class MovieRepository: MovieRepositoryProtocol, Sendable {
         }
     }
     
-    func getMovie(id: String) async throws -> Movie {
+    func getMovieDetail(id: String) async throws -> MovieDetail {
         do {
-            let dto: MovieDTO = try await client.request(GetMovieEndpoint(id: id))
-            guard let movie = MovieMapper.map(dto) else {
-                throw TMDBError.unknown("Invalid response")
-            }
-            return movie
+            let dto: MovieDetailDTO = try await client.request(GetMovieDetailEndpoint(id: id))
+            return MovieDetailMapper.map(dto)
         } catch {
             throw mapToTMDBError(error)
         }

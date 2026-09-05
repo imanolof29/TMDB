@@ -31,7 +31,7 @@ struct GetNowPlayingEndpoint: Endpoint {
     var headers: [String : String] = [:]
 }
 
-struct GetMovieEndpoint: Endpoint {
+struct GetMovieDetailEndpoint: Endpoint {
     let id: String
     var method: HTTPMethod { .get }
     var body: Data? { nil }

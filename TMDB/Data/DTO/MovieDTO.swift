@@ -23,4 +23,7 @@ struct MovieDTO: Sendable, Decodable {
     let runtime: Int?
     let tagline: String?
     let status: String?
+    /// Solo presente en la respuesta de `movie/{id}` (detalle). Los endpoints de listado
+    /// devuelven `genre_ids` en su lugar, que no mapeamos por ahora.
+    let genres: [GenreDTO]?
 }

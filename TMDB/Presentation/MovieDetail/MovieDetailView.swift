@@ -35,7 +35,7 @@ struct MovieDetailView: View {
         .toolbarBackground(.hidden, for: .navigationBar)
     }
 
-    private func content(for movie: Movie) -> some View {
+    private func content(for movie: MovieDetail) -> some View {
         ScrollView {
             VStack {
                 RemoteImage(url: movie.posterURL)

@@ -11,5 +11,5 @@ protocol MovieRepositoryProtocol {
     func getMovies() async throws -> [Movie]
     func getPopularMovies() async throws -> [Movie]
     func getNowPlaying() async throws -> [Movie]
-    func getMovie(id: String) async throws -> Movie
+    func getMovieDetail(id: String) async throws -> MovieDetail
 }

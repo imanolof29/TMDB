@@ -10,7 +10,7 @@ import Foundation
 @Observable
 final class MovieDetailViewModel {
 
-    private(set) var loadState: LoadState<Movie> = .idle
+    private(set) var loadState: LoadState<MovieDetail> = .idle
 
     private let movieId: Int
     private let movieRepository: MovieRepositoryProtocol
@@ -23,7 +23,7 @@ final class MovieDetailViewModel {
     func load() async {
         loadState = .loading
         do {
-            let movie = try await movieRepository.getMovie(id: String(movieId))
+            let movie = try await movieRepository.getMovieDetail(id: String(movieId))
             loadState = .loaded(movie)
         } catch {
             loadState = .failed(TMDBError.from(error))
